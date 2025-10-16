@@ -19,15 +19,64 @@
   ~
   -->
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:weightSum="2"
+    android:background="?android:attr/colorBackground"
     tools:context=".view.ui.splash.SplashFragment">
 
+    <!-- Animated background circles - subtle ambient floating -->
+    <View
+        android:id="@+id/circle1"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        android:layout_gravity="top|start"
+        android:alpha="0.04"
+        android:background="@drawable/splash_circle" />
+
+    <View
+        android:id="@+id/circle2"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_gravity="bottom|end"
+        android:alpha="0.05"
+        android:background="@drawable/splash_circle" />
+
+    <View
+        android:id="@+id/circle3"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_gravity="center"
+        android:alpha="0.03"
+        android:background="@drawable/splash_circle" />
+
+    <View
+        android:id="@+id/circle4"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_gravity="top|end"
+        android:alpha="0.04"
+        android:background="@drawable/splash_circle" />
+
+    <View
+        android:id="@+id/circle5"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_gravity="bottom|start"
+        android:alpha="0.05"
+        android:background="@drawable/splash_circle" />
+
+    <View
+        android:id="@+id/circle6"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_gravity="center|end"
+        android:alpha="0.03"
+        android:background="@drawable/splash_circle" />
+
+    <!-- Toolbar (hidden by default) -->
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
@@ -35,88 +84,106 @@
         android:minHeight="?attr/actionBarSize"
         app:menu="@menu/menu_splash" />
 
-    <RelativeLayout
-        android:id="@+id/layout_top"
+    <!-- Main content -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1">
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="32dp">
 
+        <!-- Logo with subtle pulse animation -->
         <androidx.appcompat.widget.AppCompatImageView
             android:id="@+id/img_icon"
             android:layout_width="@dimen/icon_size_avatar"
             android:layout_height="@dimen/icon_size_avatar"
-            android:layout_centerInParent="true"
             android:minWidth="176dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/ic_launcher"
+            android:scaleType="centerInside" />
 
+        <!-- App title -->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_title"
             style="@style/TextAppearance.Aurora.Title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/img_icon"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/margin_normal"
-            android:layout_marginBottom="@dimen/margin_xsmall"
+            android:layout_marginTop="24dp"
+            android:layout_marginBottom="8dp"
             android:text="@string/app_name"
-            android:textAlignment="center" />
+            android:textAlignment="center"
+            android:textSize="28sp"
+            android:textStyle="bold" />
 
+        <!-- Status text -->
         <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/txt_status"
             style="@style/TextAppearance.Aurora.Line1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/txt_title"
-            android:layout_centerHorizontal="true"
-            android:layout_marginHorizontal="@dimen/margin_xlarge"
+            android:layout_marginHorizontal="32dp"
+            android:layout_marginBottom="48dp"
+            android:alpha="0.7"
             android:maxLines="2"
             android:textAlignment="center"
-            tools:text="@string/session_login" />
-    </RelativeLayout>
+            tools:text="Initializing..." />
 
-    <LinearLayout
-        android:id="@+id/layout_action"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:padding="@dimen/padding_large"
-        android:visibility="invisible"
-        tools:visibility="visible">
+        <!-- Enter button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_enter"
+            android:layout_width="200dp"
+            android:layout_height="56dp"
+            android:text="Enter"
+            android:textSize="16sp"
+            android:textAllCaps="false"
+            app:cornerRadius="28dp"
+            app:icon="@drawable/ic_arrow_forward"
+            app:iconGravity="end"
+            app:iconSize="24dp"
+            android:visibility="gone"
+            tools:visibility="visible" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/txt_action"
-            style="@style/AuroraTextStyle.Line1"
-            android:layout_width="wrap_content"
+        <!-- Hidden action layout for compatibility -->
+        <LinearLayout
+            android:id="@+id/layout_action"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin_normal"
-            android:text="@string/account_login_using" />
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone"
+            tools:visibility="gone">
 
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txt_action"
+                style="@style/AuroraTextStyle.Line1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/margin_normal"
+                android:text="@string/account_login_using" />
 
-        <com.aurora.store.view.custom.layouts.button.StateButton
-            android:id="@+id/btn_anonymous"
-            android:layout_width="@dimen/width_button"
-            android:layout_height="wrap_content"
-            app:btnStateIcon="@drawable/ic_anonymous"
-            app:btnStateText="@string/account_anonymous" />
+            <com.aurora.store.view.custom.layouts.button.StateButton
+                android:id="@+id/btn_anonymous"
+                android:layout_width="@dimen/width_button"
+                android:layout_height="wrap_content"
+                app:btnStateIcon="@drawable/ic_anonymous"
+                app:btnStateText="@string/account_anonymous" />
 
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/txt_trouble"
-            style="@style/AuroraTextStyle.Line2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin_large"
-            android:layout_marginBottom="@dimen/margin_normal"
-            android:text="@string/account_login_trouble"
-            android:textAlignment="center"
-            android:gravity="center" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txt_trouble"
+                style="@style/AuroraTextStyle.Line2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="@string/account_login_trouble" />
 
-        <com.aurora.store.view.custom.layouts.button.StateButton
-            android:id="@+id/btn_spoof_manager"
-            android:layout_width="@dimen/width_button"
-            android:layout_height="wrap_content"
-            app:btnStateIcon="@drawable/ic_spoof"
-            app:btnStateText="@string/title_spoof_manager" />
+            <com.aurora.store.view.custom.layouts.button.StateButton
+                android:id="@+id/btn_spoof_manager"
+                android:layout_width="@dimen/width_button"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                app:btnStateIcon="@drawable/ic_spoof"
+                app:btnStateText="@string/title_spoof_manager" />
+        </LinearLayout>
+
     </LinearLayout>
-</LinearLayout>
+
+</FrameLayout>

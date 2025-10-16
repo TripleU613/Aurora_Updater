@@ -21,7 +21,10 @@ package com.aurora.store.view.ui.onboarding
 
 import androidx.fragment.app.Fragment
 import com.aurora.extensions.isHuawei
+import com.aurora.store.data.installer.AppInstaller
+import com.aurora.store.data.model.Installer
 import com.aurora.store.data.providers.BlacklistProvider
+import com.aurora.store.data.providers.SpoofProvider
 import com.aurora.store.util.PackageUtil
 import com.aurora.store.util.Preferences.PREFERENCE_AUTO_DELETE
 import com.aurora.store.util.Preferences.PREFERENCE_DEFAULT_SELECTED_TAB
@@ -43,6 +46,9 @@ class OnboardingFragment : BaseFlavouredOnboardingFragment() {
     @Inject
     lateinit var blacklistProvider: BlacklistProvider
 
+    @Inject
+    lateinit var spoofProvider: SpoofProvider
+
     override fun loadDefaultPreferences() {
         /*Filters*/
         save(PREFERENCE_FILTER_AURORA_ONLY, false)
@@ -57,13 +63,37 @@ class OnboardingFragment : BaseFlavouredOnboardingFragment() {
         save(PREFERENCE_DEFAULT_SELECTED_TAB, 0)
         save(PREFERENCE_FOR_YOU, true)
 
+        /*Device Spoof - Default to reloaded_beryllium for better compatibility*/
+        setDefaultDeviceSpoof()
+
         /*Installer*/
         save(PREFERENCE_AUTO_DELETE, true)
-        save(PREFERENCE_INSTALLER_ID, 0)
+
+        // Smart installer selection: prefer Aurora Services, then ROOT, then SESSION
+        val installerId = when {
+            AppInstaller.hasAuroraService(requireContext()) -> Installer.SERVICE.ordinal
+            AppInstaller.hasRootAccess() -> Installer.ROOT.ordinal
+            else -> Installer.SESSION.ordinal
+        }
+        save(PREFERENCE_INSTALLER_ID, installerId)
 
         /*Updates*/
         save(PREFERENCE_UPDATES_EXTENDED, false)
         save(PREFERENCE_UPDATES_CHECK_INTERVAL, 3)
+    }
+
+    private fun setDefaultDeviceSpoof() {
+        // Find and set reloaded_beryllium as default device spoof
+        val availableDevices = spoofProvider.availableSpoofDeviceProperties
+        val berylliumDevice = availableDevices.find { properties ->
+            val name = properties.getProperty("UserReadableName", "")
+            name.contains("beryllium", ignoreCase = true) &&
+            name.contains("xiaomi", ignoreCase = true)
+        }
+
+        berylliumDevice?.let {
+            spoofProvider.setSpoofDeviceProperties(it)
+        }
     }
 
     override fun onboardingPages(): List<Fragment> {
