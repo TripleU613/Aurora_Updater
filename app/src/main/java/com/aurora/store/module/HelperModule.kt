@@ -29,7 +29,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object HelperModule {
 
-    @Singleton
     @Provides
     fun providesAppDetailsHelperInstance(
         authProvider: AuthProvider,
@@ -39,7 +38,6 @@ object HelperModule {
             .using(httpClient)
     }
 
-    @Singleton
     @Provides
     fun providesStreamHelperInstance(
         authProvider: AuthProvider,
@@ -49,7 +47,6 @@ object HelperModule {
             .using(httpClient)
     }
 
-    @Singleton
     @Provides
     fun providesExpandedBrowseHelperInstance(
         authProvider: AuthProvider,
@@ -59,7 +56,6 @@ object HelperModule {
             .using(httpClient)
     }
 
-    @Singleton
     @Provides
     fun providesCategoryHelperInstance(
         authProvider: AuthProvider,
@@ -69,7 +65,6 @@ object HelperModule {
             .using(httpClient)
     }
 
-    @Singleton
     @Provides
     fun providesReviewsHelperInstance(
         authProvider: AuthProvider,
@@ -79,7 +74,6 @@ object HelperModule {
             .using(httpClient)
     }
 
-    @Singleton
     @Provides
     fun providesSearchHelperInstance(
         authProvider: AuthProvider,
@@ -89,7 +83,6 @@ object HelperModule {
             .using(httpClient)
     }
 
-    @Singleton
     @Provides
     fun providesPurchaseHelperInstance(
         authProvider: AuthProvider,
@@ -99,7 +92,6 @@ object HelperModule {
             .using(httpClient)
     }
 
-    @Singleton
     @Provides
     fun providesWebStreamHelperInstance(
         spoofProvider: SpoofProvider,
@@ -110,7 +102,6 @@ object HelperModule {
             .with(spoofProvider.locale)
     }
 
-    @Singleton
     @Provides
     fun providesWebDataSafetyHelperInstance(
         spoofProvider: SpoofProvider,
@@ -121,7 +112,6 @@ object HelperModule {
             .with(spoofProvider.locale)
     }
 
-    @Singleton
     @Provides
     fun providesWebSearchHelperInstance(
         spoofProvider: SpoofProvider,
@@ -132,7 +122,6 @@ object HelperModule {
             .with(spoofProvider.locale)
     }
 
-    @Singleton
     @Provides
     fun providesWebCategoryStreamHelperInstance(
         spoofProvider: SpoofProvider,
@@ -143,7 +132,6 @@ object HelperModule {
             .with(spoofProvider.locale)
     }
 
-    @Singleton
     @Provides
     fun providesWebTopChartsHelperInstance(
         spoofProvider: SpoofProvider,
@@ -154,7 +142,6 @@ object HelperModule {
             .with(spoofProvider.locale)
     }
 
-    @Singleton
     @Provides
     fun providesWebAppDetailsHelperInstance(
         spoofProvider: SpoofProvider,

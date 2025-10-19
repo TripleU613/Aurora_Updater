@@ -112,7 +112,7 @@ class OnboardingFragment : BaseFlavouredOnboardingFragment() {
             val prefs = requireContext().getSharedPreferences(requireContext().packageName + "_preferences", android.content.Context.MODE_PRIVATE)
             prefs.edit(true) {
                 putBoolean("DEVICE_SPOOF_ENABLED", true)
-                putString("DEVICE_SPOOF_PROPERTIES", json.encodeToString<Properties>(properties))
+                putString("DEVICE_SPOOF_PROPERTIES", json.encodeToString(properties))
             }
         }
     }

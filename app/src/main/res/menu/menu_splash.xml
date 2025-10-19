@@ -36,5 +36,6 @@
     <item
         android:id="@+id/menu_about"
         android:icon="@drawable/ic_menu_about"
-        android:title="@string/title_about" />
+        android:title="@string/title_about"
+        android:visible="false" />
 </menu>

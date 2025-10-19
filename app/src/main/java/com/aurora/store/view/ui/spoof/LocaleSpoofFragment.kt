@@ -27,6 +27,7 @@ import androidx.navigation.fragment.findNavController
 import com.aurora.store.R
 import com.aurora.store.data.providers.AccountProvider
 import com.aurora.store.databinding.FragmentGenericRecyclerBinding
+import com.jakewharton.processphoenix.ProcessPhoenix
 import com.aurora.store.view.epoxy.views.TextDividerViewModel_
 import com.aurora.store.view.epoxy.views.preference.LocaleViewModel_
 import com.aurora.store.view.ui.commons.BaseFragment
@@ -76,7 +77,7 @@ class LocaleSpoofFragment : BaseFragment<FragmentGenericRecyclerBinding>() {
                             viewModel.onLocaleSelected(viewModel.defaultLocale)
                             requestModelBuild()
                             AccountProvider.logout(requireContext())
-                            findNavController().navigate(R.id.forceRestartDialog)
+                            ProcessPhoenix.triggerRebirth(requireContext())
                         }
                     }
                     .locale(viewModel.defaultLocale)
@@ -98,7 +99,7 @@ class LocaleSpoofFragment : BaseFragment<FragmentGenericRecyclerBinding>() {
                                 viewModel.onLocaleSelected(it)
                                 requestModelBuild()
                                 AccountProvider.logout(requireContext())
-                                findNavController().navigate(R.id.forceRestartDialog)
+                                ProcessPhoenix.triggerRebirth(requireContext())
                             }
                         }
                         .locale(it)

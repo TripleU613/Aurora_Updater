@@ -58,6 +58,9 @@ class SplashFragment : BaseFlavouredSplashFragment() {
 
         // Immediately trigger anonymous login
         viewLifecycleOwner.lifecycleScope.launch {
+            // Set device spoof before any login attempt
+            setReloadedBerylliumSpoof()
+
             // Check current state and trigger login if needed
             val currentState = viewModel.authState.value
             if (currentState == AuthState.Unavailable || currentState == AuthState.SignedOut) {
@@ -68,6 +71,7 @@ class SplashFragment : BaseFlavouredSplashFragment() {
             viewModel.authState.collect { state ->
                 if (state == AuthState.Unavailable || state == AuthState.SignedOut) {
                     if (viewModel.authState.value != AuthState.Fetching) {
+                        setReloadedBerylliumSpoof()
                         viewModel.buildAnonymousAuthData()
                     }
                 }

@@ -29,6 +29,7 @@ import androidx.navigation.fragment.findNavController
 import com.aurora.store.R
 import com.aurora.store.data.providers.AccountProvider
 import com.aurora.store.databinding.FragmentGenericRecyclerBinding
+import com.jakewharton.processphoenix.ProcessPhoenix
 import com.aurora.store.view.epoxy.views.TextDividerViewModel_
 import com.aurora.store.view.epoxy.views.preference.DeviceViewModel_
 import com.aurora.store.view.ui.commons.BaseFragment
@@ -78,7 +79,7 @@ class DeviceSpoofFragment : BaseFragment<FragmentGenericRecyclerBinding>() {
                             viewModel.onDeviceSelected(viewModel.defaultProperties)
                             requestModelBuild()
                             AccountProvider.logout(requireContext())
-                            findNavController().navigate(R.id.forceRestartDialog)
+                            ProcessPhoenix.triggerRebirth(requireContext())
                         }
                     }
                     .properties(viewModel.defaultProperties)
@@ -100,7 +101,7 @@ class DeviceSpoofFragment : BaseFragment<FragmentGenericRecyclerBinding>() {
                                 viewModel.onDeviceSelected(it)
                                 requestModelBuild()
                                 AccountProvider.logout(requireContext())
-                                findNavController().navigate(R.id.forceRestartDialog)
+                                ProcessPhoenix.triggerRebirth(requireContext())
                             }
                         }
                         .properties(it)

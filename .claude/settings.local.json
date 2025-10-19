@@ -4,7 +4,9 @@
       "Bash(./gradlew:*)",
       "Bash(java:*)",
       "Bash(where java:*)",
-      "Bash(echo $JAVA_HOME)"
+      "Bash(echo $JAVA_HOME)",
+      "Bash(git log:*)",
+      "Read(//c/Users/usher/StudioProjects/IMEIKOSHERAURORA_Private/**)"
     ],
     "deny": [],
     "ask": []
