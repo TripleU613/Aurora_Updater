@@ -51,7 +51,10 @@ class OnboardingFragment : BaseFlavouredOnboardingFragment() {
         save(PREFERENCE_FILTER_FDROID, true)
 
         /*Network*/
-        save(PREFERENCE_DISPENSER_URLS, setOf(Constants.URL_DISPENSER))
+        save(
+            PREFERENCE_DISPENSER_URLS,
+            setOf(Constants.URL_DISPENSER, "https://dispatch.auroraoss.com/api/auth")
+        )
         save(PREFERENCE_VENDING_VERSION, 0)
 
         /*Customization*/

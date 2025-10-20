@@ -52,7 +52,10 @@ class MigrationReceiver : BroadcastReceiver() {
             // 58 -> 59
             if (currentVersion == 0) {
                 CacheWorker.scheduleAutomatedCacheCleanup(context) // !1089
-                context.save(PREFERENCE_DISPENSER_URLS, setOf(Constants.URL_DISPENSER)) // !1117
+                context.save(
+                    PREFERENCE_DISPENSER_URLS,
+                    setOf(Constants.URL_DISPENSER, "https://dispatch.auroraoss.com/api/auth")
+                ) // !1117
                 if (Preferences.getInteger(context, PREFERENCE_VENDING_VERSION) == -1) {
                     context.save(PREFERENCE_VENDING_VERSION, 0) // !1049
                 }
