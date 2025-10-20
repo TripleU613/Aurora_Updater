@@ -28,8 +28,6 @@ import java.io.File
 import java.io.FileInputStream
 import java.io.IOException
 import java.util.Properties
-import java.util.jar.JarEntry
-import java.util.jar.JarFile
 import javax.inject.Singleton
 
 /**
@@ -55,20 +53,23 @@ open class SpoofDeviceProvider(private val context: Context) {
 
     private val spoofDevicesFromApk: List<Properties>
         get() {
-            val jarFile = apkAsJar
             val propertiesList: MutableList<Properties> = ArrayList()
-            if (null == jarFile) {
-                return propertiesList
-            }
-            val entries = jarFile.entries()
-            while (entries.hasMoreElements()) {
-                val entry = entries.nextElement()
-                if (filenameValid(entry.name)) {
-                    val properties = getProperties(jarFile, entry)
-                    if (properties.getProperty("UserReadableName") != null) {
-                        propertiesList.add(properties)
+            try {
+                val files = context.assets.list("spoofs")
+                if (files != null) {
+                    for (file in files) {
+                        if (filenameValid(file)) {
+                            val properties = Properties()
+                            properties.load(context.assets.open("spoofs/$file"))
+                            properties.setProperty("CONFIG_NAME", "spoofs/$file")
+                            if (properties.getProperty("UserReadableName") != null) {
+                                propertiesList.add(properties)
+                            }
+                        }
                     }
                 }
+            } catch (exception: IOException) {
+                Log.e(TAG, "Could not read spoof files from assets", exception)
             }
             return propertiesList
         }
@@ -89,17 +90,6 @@ open class SpoofDeviceProvider(private val context: Context) {
             return deviceNames
         }
 
-    private fun getProperties(jarFile: JarFile, entry: JarEntry): Properties {
-        val properties = Properties()
-        try {
-            properties.load(jarFile.getInputStream(entry))
-            properties.setProperty("CONFIG_NAME", entry.name)
-        } catch (exception: IOException) {
-            Log.e(TAG, "Could not read ${entry.name}", exception)
-        }
-        return properties
-    }
-
     private fun getProperties(file: File): Properties {
         val properties = Properties()
         try {
@@ -110,36 +100,6 @@ open class SpoofDeviceProvider(private val context: Context) {
         }
         return properties
     }
-
-    private val apkAsJar: JarFile?
-        get() {
-            val file = apkFile
-            try {
-                if (file != null && file.exists()) {
-                    return JarFile(file)
-                }
-            } catch (e: IOException) {
-                Log.e(TAG, "Could not open Aurora Store apk as a jar file")
-            }
-            return null
-        }
-
-    private val apkFile: File?
-        get() {
-            try {
-                val sourceDir: String = context.packageManager.getApplicationInfo(
-                    BuildConfig.APPLICATION_ID,
-                    0
-                ).sourceDir
-
-                if (sourceDir.isNotEmpty()) {
-                    return File(sourceDir)
-                }
-            } catch (ignored: Exception) {
-
-            }
-            return null
-        }
 
     private fun filenameValid(filename: String): Boolean {
         return filename.endsWith(SUFFIX)
