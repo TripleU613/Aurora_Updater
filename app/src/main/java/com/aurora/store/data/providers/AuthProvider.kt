@@ -112,9 +112,18 @@ class AuthProvider @Inject constructor(
     suspend fun buildAnonymousAuthData(): Result<AuthData> {
         return withContext(Dispatchers.IO) {
             try {
+                val properties = try {
+                    java.util.Properties().apply {
+                        context.assets.open("spoofs/poco_f1.properties").use { load(it) }
+                    }
+                } catch (e: java.io.IOException) {
+                    Log.e(TAG, "Failed to load beryllium properties, falling back to default", e)
+                    spoofProvider.deviceProperties
+                }
+
                 val playResponse = httpClient.postAuth(
                     dispenserURL!!,
-                    json.encodeToString(spoofProvider.deviceProperties).toByteArray()
+                    json.encodeToString(properties).toByteArray()
                 ).also {
                     if (!it.isSuccessful) throwError(it, context)
                 }
@@ -126,7 +135,7 @@ class AuthProvider @Inject constructor(
                         token = auth.auth,
                         tokenType = AuthHelper.Token.AUTH,
                         isAnonymous = true,
-                        properties = spoofProvider.deviceProperties,
+                        properties = properties,
                         locale = spoofProvider.locale
                     )
                 )

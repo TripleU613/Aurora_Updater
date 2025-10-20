@@ -48,7 +48,7 @@ object Constants {
     const val NOTIFICATION_CHANNEL_ACCOUNT = "NOTIFICATION_CHANNEL_ACCOUNT"
 
     const val GITLAB_URL = "https://github.com/alltechdev/AuroraUpdater"
-    const val URL_DISPENSER = "https://auroraoss.com/api/auth"
+    const val URL_DISPENSER = "https://dispatch.auroraoss.com/api/auth"
 
     //ACCOUNTS
     const val ACCOUNT_SIGNED_IN = "ACCOUNT_SIGNED_IN"
