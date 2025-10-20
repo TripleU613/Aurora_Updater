@@ -38,6 +38,7 @@ import javax.inject.Singleton
 
 @Singleton
 @Deprecated("Deprecated in favour of SessionInstaller")
+@Suppress("DEPRECATION")
 class NativeInstaller @Inject constructor(
     @ApplicationContext private val context: Context
 ) : InstallerBase(context) {

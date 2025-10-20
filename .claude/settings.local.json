@@ -6,7 +6,9 @@
       "Bash(where java:*)",
       "Bash(echo $JAVA_HOME)",
       "Bash(git log:*)",
-      "Read(//c/Users/usher/StudioProjects/IMEIKOSHERAURORA_Private/**)"
+      "Read(//c/Users/usher/StudioProjects/IMEIKOSHERAURORA_Private/**)",
+      "Bash(adb logcat -d -v time -s SplashFragment:V BaseFlavouredSplashFragment:V SpoofProvider:V AuthViewModel:V)",
+      "Bash(adb shell su -c \"am force-stop com.aurora.store && sqlite3 /data/data/com.aurora.store/shared_prefs/com.aurora.store_preferences.xml.db \"\"INSERT OR REPLACE INTO prefs VALUES(''PREFERENCE_INTRO'', 1, 0, 0.0, '''', '''');\"\"\")"
     ],
     "deny": [],
     "ask": []

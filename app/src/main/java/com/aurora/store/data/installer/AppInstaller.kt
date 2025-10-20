@@ -48,9 +48,9 @@ import javax.inject.Singleton
 class AppInstaller @Inject constructor(
     @ApplicationContext private val context: Context,
     private val sessionInstaller: SessionInstaller,
-    private val nativeInstaller: NativeInstaller,
+    @Suppress("DEPRECATION") private val nativeInstaller: NativeInstaller,
     private val rootInstaller: RootInstaller,
-    private val serviceInstaller: ServiceInstaller,
+    @Suppress("DEPRECATION") private val serviceInstaller: ServiceInstaller,
     private val amInstaller: AMInstaller,
     private val shizukuInstaller: ShizukuInstaller
 ) {
@@ -66,6 +66,7 @@ class AppInstaller @Inject constructor(
             return Installer.entries[Preferences.getInteger(context, PREFERENCE_INSTALLER_ID)]
         }
 
+        @Suppress("DEPRECATION")
         fun getAvailableInstallersInfo(context: Context): List<InstallerInfo> {
             return listOfNotNull(
                 SessionInstaller.installerInfo,
@@ -113,6 +114,7 @@ class AppInstaller @Inject constructor(
             return Shell.getShell().isRoot
         }
 
+        @Suppress("DEPRECATION")
         fun hasAuroraService(context: Context): Boolean {
             return try {
                 val packageInfo = PackageUtil.getPackageInfo(
